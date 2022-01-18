@@ -1,4 +1,4 @@
-# Byte-compiled / optimized / DLL files
+﻿# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -150,3 +150,5 @@ static/
 posts/static/
 media/
 
+# секретная информация
+.env
