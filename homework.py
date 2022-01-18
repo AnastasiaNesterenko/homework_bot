@@ -46,9 +46,11 @@ def send_message(bot, message):
 
 
 def get_api_answer(current_timestamp):
-    """Бот делает запрос на сайт яндекса,
-    либо по дате на текущий момент,
-    либо по дате последней проверки."""
+    """
+    Бот делает запрос на сайт яндекса.
+    Либо по дате на текущий момент.
+    Либо по дате последней проверки.
+    """
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     response = requests.get(ENDPOINT, headers=HEADERS, params=params)
@@ -60,8 +62,10 @@ def get_api_answer(current_timestamp):
 
 
 def check_response(response):
-    """Бот проверяет правильность запроса -
-    существования полей в словаре запроса."""
+    """
+    Бот проверяет правильность запроса.
+    Существования полей в словаре запроса.
+    """
     if response['homeworks'] \
             or response['homeworks'] == [] \
             and response['current_date']:
@@ -80,7 +84,8 @@ def parse_status(homework):
                 homework_name = homework['homework_name']
                 homework_status = homework['status']
                 verdict = HOMEWORK_STATUSES[homework_status]
-                return f'Изменился статус проверки работы "{homework_name}". {verdict}'
+                return f'Изменился статус проверки ' \
+                       f'работы "{homework_name}". {verdict}'
             else:
                 raise Exception(
                     'Статус домашней работы отсутсвует '
