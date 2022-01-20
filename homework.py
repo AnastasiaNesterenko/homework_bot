@@ -1,15 +1,10 @@
+import json
+import logging
+import os
+import time
 from http import HTTPStatus
 
-import json
-
-import logging
-
-import os
-
-import time
-
 import requests
-
 import telegram
 
 from dotenv import load_dotenv
@@ -70,7 +65,13 @@ def get_api_answer(current_timestamp):
                 raise Exception('Запрос не преобразовался в формат JSON')
         else:
             raise Exception('Код доступа не равен 200')
+    except requests.exceptions.RequestException:
+        raise Exception('Сайт недоступен')
+    except requests.exceptions.HTTPError:
+        raise Exception('Сайт недоступен')
     except requests.ConnectionError:
+        raise Exception('Сайт недоступен')
+    except requests.exceptions.Timeout:
         raise Exception('Сайт недоступен')
 
 
@@ -120,10 +121,9 @@ def main():
     """Основная логика работы бота."""
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
-    if check_tokens():
-        pass
-    else:
+    if not check_tokens():
         logger.critical('Отсутствуют переменные окружения')
+        time.sleep(RETRY_TIME)
     status = ''
     old_message = ''
     while True:
