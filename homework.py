@@ -65,14 +65,14 @@ def get_api_answer(current_timestamp):
                 raise Exception('Запрос не преобразовался в формат JSON')
         else:
             raise Exception('Код доступа не равен 200')
-    except requests.exceptions.RequestException:
-        raise Exception('Сайт недоступен')
     except requests.exceptions.HTTPError:
-        raise Exception('Сайт недоступен')
+        raise Exception('Ошибка ответа (состояния) сервера')
     except requests.ConnectionError:
-        raise Exception('Сайт недоступен')
+        raise Exception('Ошибка соединения')
     except requests.exceptions.Timeout:
-        raise Exception('Сайт недоступен')
+        raise Exception('Ошибка времени ожидания')
+    except requests.exceptions.RequestException:
+        raise Exception('Ошибка запроса')
 
 
 def check_response(response):
