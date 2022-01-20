@@ -13,7 +13,8 @@ load_dotenv()
 
 PRACTICUM_TOKEN = os.getenv('PRACTICUM_TOKEN')
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-TELEGRAM_CHAT_ID = os.getenv('CHAT_ID')
+# TELEGRAM_CHAT_ID = os.getenv('CHAT_ID')
+TELEGRAM_CHAT_ID = 0
 
 RETRY_TIME = 600
 ENDPOINT = 'https://practicum.yandex.ru/api/user_api/homework_statuses/'
@@ -123,7 +124,7 @@ def main():
     current_timestamp = int(time.time())
     if not check_tokens():
         logger.critical('Отсутствуют переменные окружения')
-        time.sleep(RETRY_TIME)
+        exit()
     status = ''
     old_message = ''
     while True:
